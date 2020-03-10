@@ -5,7 +5,7 @@
         // Chamando conexão com banco de dados;
         include_once("conexao.php");
 
-        // Verificando  o method POST esta sendo iniciado;
+        // Verificando se POST esta sendo iniciado;
         if(isset($_POST["txt_email"], $_POST['txt_senha'], $_POST['txt_confirmar_senha'])) {
             
         // Method Post;
