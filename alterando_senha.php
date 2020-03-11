@@ -5,7 +5,7 @@
         // Chamando conexão com banco de dados;
         include_once("conexao.php");
 
-        // Verificando  o method POST esta sendo iniciado;
+        // Verificando se o method POST esta sendo iniciado;
         if(isset($_POST["txt_email"], $_POST['txt_senha'], $_POST['txt_confirmar_senha'])) {
             
         // Method Post;
@@ -38,7 +38,7 @@
         // linha do banco de dados para objeto;
         $row = mysqli_fetch_assoc($result);
 
-                                // VERIFICAÇÕES DE FORM //
+                            // VERIFICAÇÕES DE FORM //
 
         // Verificação de senha com no minimo 6 digitos;
         if($row["email"] == $email && strlen($senha) <6 && strlen($confirmarSenha) <6 ) {
