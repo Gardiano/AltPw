@@ -20,8 +20,26 @@
             <form method="POST" action="alterando_senha.php" class="mt-5">
                 <h6 class="mt-auto d-block text-center"> Alteração de Senha </h6>
 
+                        <!-- Confirmação de Alteração De Senha -->
+                        <?php if(isset($_SESSION['AlteracaoComSucesso'])): ?>
+                            <span>
+                                <p class="mt-3" style="color:green; text-align:center; font-size: 10px; ">
+                                    SENHA foi alterada com sucesso!
+                                </p> 
+                            </span>
+                        <?php endif; unset($_SESSION['AlteracaoComSucesso']); ?>
+
                 <label class="mt-auto d-block text-center"> Email </label>
                     <input type="email" name="txt_email" class="mx-auto d-block"  />
+                        <!-- Verificando se email é diferente ao do banco de dados -->
+                        <?php if(isset($_SESSION['emailDif'])): ?>
+                            <span>
+                                <p class="mt-3" style="color:red; text-align:center; font-size: 10px; ">
+                                    Email Diferente ao cadastrado;
+                                </p> 
+                            </span>
+                        <?php endif; unset($_SESSION['emailDif']); ?>
+
                         <!-- Verificando se email é valido; -->
                         <?php if(isset($_SESSION['erroEmail'])): ?>
                             <span>
@@ -33,10 +51,29 @@
                 
                 <label class="mt-auto d-block text-center"> Nova Senha </label>
                     <input type="password" name="txt_senha" class="mx-auto d-block"  />
+                        
+                    <!-- // Verificação de senha com no minimo 6 digitos; -->
+                        <?php if(isset($_SESSION['lenSenha'])): ?>
+                            <span>
+                                <p class="mt-3" style="color:red; text-align:center; font-size: 10px; ">
+                                    Informe uma senha com no minimo 6 digitos
+                                </p> 
+                            </span>
+                        <?php endif; unset($_SESSION['lenSenha']); ?>
                 
                     <label class="mt-auto d-block text-center"> Confirmar Senha </label>
                         <input type="password" name="txt_confirmar_senha" class="mx-auto d-block"  />
-                        <!-- Verificando se a senha tem no minimo 6 digitos; -->
+
+                        <!-- Verificação de Senhas Diferentes -->
+                        <?php if(isset($_SESSION['senhaDif'])): ?>
+                            <span>
+                                <p class="mt-3" style="color:red; text-align:center; font-size: 10px; ">
+                                    Senhas digitadas são diferentes;
+                                </p> 
+                            </span>
+                        <?php endif; unset($_SESSION['senhaDif']); ?>
+
+                        <!-- Verificando se a senha tem no minimo 6 digitos (verifica ao clicar apenas no botão 'Alterar'); -->
                         <?php if(isset($_SESSION['erroSenha'])): ?>
                             <span>
                                 <p class="mt-3" style="color:red; text-align:center; font-size: 10px; ">
@@ -51,13 +88,12 @@
                         <?php if(isset($_SESSION['erroVazio'])): ?>
                             <span>
                                 <p class="mt-3" style="color:red; text-align:center; font-size: 10px; ">
-                                    Campo E-mail, Senha Ou Confirmar Senha Estão Vázios
+                                    Algum campo obrigatorio ficou vazio... Favor preencher.
                                 </p> 
                             </span>
-                        <?php endif; unset($_SESSION['erroVazio']); ?>                                            
-            </form>
-            
-            <script src="js/scripts.js"></script>
+                        <?php endif; unset($_SESSION['erroVazio']); ?>                                                            
+            </form>            
+                                <script src="js/scripts.js"></script>
         </body>
     </html>
 

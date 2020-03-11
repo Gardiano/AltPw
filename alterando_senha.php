@@ -5,7 +5,7 @@
         // Chamando conexão com banco de dados;
         include_once("conexao.php");
 
-        // Verificando se POST esta sendo iniciado;
+        // Verificando  o method POST esta sendo iniciado;
         if(isset($_POST["txt_email"], $_POST['txt_senha'], $_POST['txt_confirmar_senha'])) {
             
         // Method Post;
@@ -25,9 +25,8 @@
             $_SESSION['erroSenha'] = "msg";
         }
 
-        // Verificando se E-mail digitado tem no banco de dados;
-        if($row["email"] != $_POST['txt_email']) {
-            $_SESSION['erroEmail'] = "msg";
+        if( $senha != $confirmarSenha) {
+            $_SESSION['senhaDif'] = "msg";
         }   
 
         // verificando se há um email válido;
@@ -39,15 +38,33 @@
         // linha do banco de dados para objeto;
         $row = mysqli_fetch_assoc($result);
 
-        // Caso o email informado pelo usuario seja igual ao email cadastrado no banco de dados. Posso alterar a senha;
-        if($row["email"] == $email) {
-            $alterarPw = mysqli_query($conn, "UPDATE usuarios SET senha = '$senhaEncript' WHERE email = '$email'");
-            echo "<script> alert('Senha Alterada com Sucesso!'); window.location='index.php';</script>";                     
-        } else {
-        // Caso email informado não estiver cadastrado retorna mensagem de erro;
-            echo "Erro: Email não cadastrado no banco de dados";
+                                // VERIFICAÇÕES DE FORM //
+
+        // Verificação de senha com no minimo 6 digitos;
+        if($row["email"] == $email && strlen($senha) <6 && strlen($confirmarSenha) <6 ) {
+            $_SESSION["lenSenha"] = "msg";
+                header("Location: index.php");
         }
-    }    
+
+        // Caso o email informado pelo usuario seja igual ao email cadastrado no banco de dados. Posso alterar a senha;
+        elseif($row["email"] == $email && $senha == $confirmarSenha ) {
+            $alterarPw = mysqli_query($conn, "UPDATE usuarios SET senha = '$senhaEncript' WHERE email = '$email'");            
+                $_SESSION["AlteracaoComSucesso"] = "msg";
+                    header("Location: index.php");                  
+        }
+
+        // Email diferente ao do banco de dados;
+        elseif ($row["email"] != $email) {            
+            $_SESSION['emailDif'] = "msg";
+                header("Location: index.php");
+        }
+
+        // Senhas digitadas diferentes;
+        elseif ( $senha !== $confirmarSenha ) {
+            $_SESSION['senhaDif'] = "msg";
+                header("Location: index.php");
+        }
+    }  
         mysqli_close($conn);       
 ?>
 
